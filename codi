@@ -1,0 +1,99 @@
+#include <Stepper.h>
+#include <Servo.h>
+
+const int stepsPerRevolution = 2048;
+
+Stepper myStepper(stepsPerRevolution, 8, 10, 12, 11);
+
+Servo myservo;
+
+const int kitchenLightPin = 3;
+const int livingRoomLightPin = 4;
+const int garageLightPin = 5;
+const int exteriorLightPin = 6;
+const int menjadorLightPin = 7;
+const int servo_pin = 9;
+
+void openMainDoor() {
+  myservo.write(0);
+}
+
+void closeMainDoor() {
+  myservo.write(180);
+}
+
+void startStepperMotor() {
+  myStepper.setSpeed(10);
+  myStepper.step(2048);
+}
+
+void stopStepperMotor() {
+  myStepper.setSpeed(10);
+  myStepper.step(-2048);
+}
+
+void setup() {
+  Serial.begin(9600);
+
+  myservo.attach(servo_pin);
+  pinMode(servo_pin, OUTPUT);
+
+  pinMode(kitchenLightPin, OUTPUT);
+  pinMode(livingRoomLightPin, OUTPUT);
+  pinMode(garageLightPin, OUTPUT);
+  pinMode(exteriorLightPin, OUTPUT);
+  pinMode(menjadorLightPin, OUTPUT);
+}
+
+void loop() {
+  if (Serial.available()) {
+    char val = Serial.read();
+
+    switch (val) {
+      case 'a':
+        digitalWrite(kitchenLightPin, LOW);
+        break;
+      case 'b':
+        digitalWrite(kitchenLightPin, HIGH);
+        break;
+      case 'c':
+        digitalWrite(livingRoomLightPin, LOW);
+        break;
+      case 'd':
+        digitalWrite(livingRoomLightPin, HIGH);
+        break;
+      case 'e':
+        digitalWrite(garageLightPin, LOW);
+        break;
+      case 'f':
+        digitalWrite(garageLightPin, HIGH);
+        break;
+      case 'g':
+        digitalWrite(exteriorLightPin, LOW);
+        break;
+      case 'h':
+        digitalWrite(exteriorLightPin, HIGH);
+        break;
+      case 'i':
+        digitalWrite(menjadorLightPin, LOW);
+        break;
+      case 'j':
+        digitalWrite(menjadorLightPin, HIGH);
+        break;
+      case 'k':
+        openMainDoor();
+        break;
+      case 'l':
+        closeMainDoor();  
+        break;
+      case 'm':
+        startStepperMotor();
+        break;
+      case 'n':
+        stopStepperMotor();
+        break;
+      default:
+        break;
+    }
+  }
+}
