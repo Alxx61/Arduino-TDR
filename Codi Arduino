@@ -1,9 +1,8 @@
 #include <Stepper.h>
 #include <Servo.h>
 
-const int stepsPerRevolution = 2048;
 
-Stepper myStepper(stepsPerRevolution, 8, 10, 12, 11);
+Stepper myStepper(204, 8, 10, 12, 11);
 
 Servo myservo;
 
@@ -19,7 +18,7 @@ void openMainDoor() {
 }
 
 void closeMainDoor() {
-  myservo.write(180);
+  myservo.write(89);
 }
 
 void startStepperMotor() {
@@ -84,7 +83,7 @@ void loop() {
         openMainDoor();
         break;
       case 'l':
-        closeMainDoor();  
+        closeMainDoor();
         break;
       case 'm':
         startStepperMotor();
